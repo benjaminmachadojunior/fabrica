@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<title>Estoque</title>
+	 <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      
+      <link rel="stylesheet" href="style/styleCss.css"/>
+</head>
+<body>
+
+	<header>
+		<nav class="menu">
+		    <div class="nav-wrapper">
+		      <a href="#" class="brand-logo">Estoque</a>
+		      <ul id="nav-mobile" class="right hide-on-med-and-down">
+		        <li><a href="/eventos" class="waves-effect waves-light btn"><i class="material-icons left">add_circle_outline</i>Lista de Estoque</a></li>
+		      </ul>
+		    </div>
+		</nav>
+	</header>
+	
+	<div th:each="evento : ${evento}" class="container detalhesEvento">
+	<h5>Detalhes do Estoque</h5>
+		<div class="row">
+			<p>Descricao: <span th:text="${evento.descricao}"></span></p>
+			<p>Pacote: <span th:text="${evento.pacote}"></span></p>
+			<p>Minimo: <span th:text="${evento.minimo}"></span></p>
+			<p>MediaMinima: <span th:text="${evento.mediaminima}"></span></p>
+			<p>MediaMaxima: <span th:text="${evento.mediamaxima}"></span></p>
+			<p>Maximo: <span th:text="${evento.maximo}"></span></p>
+		</div>
+	</div>
+	
+		 <th:block th:include="mensagemValidacao"></th:block>
+		<div class="container formConvidado">
+		<form method="post" th:object="${convidado}">
+			Movimentacao: <input type="text" value="" name="movimentacao" placeholder="Nome Movimentacao"/>
+			Data: <input type="text" value="" name="data" placeholder="dd/mm/aaaa" class="validate"/>
+			Observacao: <input type="text" value="" name="observacao" placeholder="observacao" class="validate"/>
+			<button class="waves-effect waves-light btn" type="submit">Adicionar</button>
+		</form>
+		</div>
+
+	<table class="container tabelaConvidado">
+		<thead>
+			<tr>
+				<th>Movimentacao</th>
+				<th>Data</th>
+				<th>Observacao</th>
+				<th>Deletar</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="convidado : ${convidados}">
+				<td><span th:text="${convidado.movimentacao}"></span></td>
+				<td><span th:text="${convidado.data}"></span></td>
+				<td><span th:text="${convidado.observacao}"></span></td>
+				<td><a class="waves-effect waves-light btn-small" th:href="${(#mvc.url('EC#deletarConvidado').arg(0, convidado.movimentacao)).build()}"><i class="material-icons left">delete</i></a></td>
+			</tr>
+		</tbody>
+	</table>
+	
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+
+</body>
+
+
+</html>
